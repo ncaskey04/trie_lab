@@ -4,6 +4,7 @@ Trie = function(){
 };
 
 Trie.prototype.learn = function(word, index){
+
   // This function should add the given word,
   // starting from the given index,
   // to this Trie.
@@ -17,6 +18,24 @@ Trie.prototype.learn = function(word, index){
   // A word does not necessarily end at a leaf.
   // You must mark nodes which are the ends of words,
   // so that the words can be reconstructed later.
+
+  
+
+  if (index === undefined){
+    index = 0;
+  }
+
+  if (index < word.length) {
+    var letter = [word[index]];
+    if(this.characters[letter] === undefined){
+      this.characters[letter] = new Trie();
+    }
+    index++;
+    this.characters[letter].learn(word,index);
+  } else {
+    this.isWord = true;
+  }
+      
 };
 
 Trie.prototype.getWords = function(words, currentWord){
@@ -31,6 +50,12 @@ Trie.prototype.find = function(word, index){
   // which corresponds to the end of the passed in word.
 
   // Be sure to consider what happens if the word is not in this Trie.
+
+  // var t = new Trie(),
+  //     b = t.characters.b,
+  //     e = t.characters.e,
+  //     be = isWord,
+  //     isWord = false;
 };
 
 Trie.prototype.autoComplete = function(prefix){
@@ -40,7 +65,7 @@ Trie.prototype.autoComplete = function(prefix){
 };
 
 try{
-  module.exports = Trie
+  module.exports = Trie;
 } catch(e){
 
 }
