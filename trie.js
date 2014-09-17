@@ -50,13 +50,18 @@ Trie.prototype.find = function(word, index){
     index = 0;
   }
 
-  var letter = [word[index]];
+  var letter = word[index];
   if (this.characters[letter] === undefined){
     return false;
   }
 
-
-
+  index = index || 0;
+  if(index < word.length - 1 && this.characters[letter]){
+    index += 1;
+    return this.characters[letter].find(word, index); 
+  } else {
+    return this.characters[letter];
+  }
 };
 
 Trie.prototype.getWords = function(words, currentWord){
@@ -84,6 +89,14 @@ Trie.prototype.autoComplete = function(prefix){
   // This function will return all completions 
   // for a given prefix.
   // It should use find and getWords.
+
+  var subTrie = this.find(prefix);
+  if(subTrie){
+    return subTrie.getWords([], prefix);
+  } else {
+    return [];
+  }
+
 };
 
 try{
